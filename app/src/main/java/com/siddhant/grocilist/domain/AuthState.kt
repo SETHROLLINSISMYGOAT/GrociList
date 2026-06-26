@@ -7,6 +7,7 @@ sealed class AuthState {
     object Loading: AuthState()
     class Success(val user: User): AuthState()
     class Error(val message:String):AuthState()
+    class CodeSent(var verificationId:String): AuthState()
 
 
 }
