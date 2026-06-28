@@ -15,9 +15,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import com.siddhant.grocilist.domain.AuthState
 @Composable
-fun PhoneInputScreen(viewModel: AuthViewModel = hiltViewModel()) {
+fun PhoneInputScreen(
+    navController: NavController,
+    viewModel:AuthViewModel = hiltViewModel()
+)
+{
     val authState by viewModel.authState.collectAsState()
     val activity = LocalContext.current as Activity
     var phoneNumber by remember { mutableStateOf("") }
@@ -27,6 +32,7 @@ fun PhoneInputScreen(viewModel: AuthViewModel = hiltViewModel()) {
         when (authState) {
             is AuthState.CodeSent -> {
                 val verificationId = (authState as AuthState.CodeSent).verificationId
+                navController.navigate("otp/$verificationId")
             }
             is AuthState.Success -> {}
             else -> {}
