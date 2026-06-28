@@ -7,6 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -15,12 +16,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.siddhant.grocilist.domain.AuthState
-
 @Composable
 fun PhoneInputScreen(viewModel: AuthViewModel = hiltViewModel()) {
     val authState by viewModel.authState.collectAsState()
     val activity = LocalContext.current as Activity
     var phoneNumber by remember { mutableStateOf("") }
+
+    // SIBLING 1: action when, runs once per state change
+    LaunchedEffect(authState) {
+        when (authState) {
+            is AuthState.CodeSent -> {
+                val verificationId = (authState as AuthState.CodeSent).verificationId
+            }
+            is AuthState.Success -> {}
+            else -> {}
+        }
+    }
+
+    // SIBLING 2: visual layout, contains the RENDERING when
     Column {
         TextField(
             value = phoneNumber,
@@ -31,23 +44,12 @@ fun PhoneInputScreen(viewModel: AuthViewModel = hiltViewModel()) {
         }) {
             Text("Send OTP")
         }
-        when(authState){
-            is AuthState.Idle->{}
-            is AuthState.Loading->{
-                CircularProgressIndicator()
-            }
-            is AuthState.Success->{}
-            is AuthState.Error->{
-                Text((authState as AuthState.Error).message)
-            }
-            is AuthState.CodeSent->{}
-
+        when (authState) {
+            is AuthState.Idle -> {}
+            is AuthState.Loading -> { CircularProgressIndicator() }
+            is AuthState.Success -> {}
+            is AuthState.Error -> { Text((authState as AuthState.Error).message) }
+            is AuthState.CodeSent -> {}
         }
-
     }
-
-
-
-
-
 }
