@@ -14,11 +14,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import com.siddhant.grocilist.data.model.CartItem
 import com.siddhant.grocilist.domain.ProductState
+import com.siddhant.grocilist.ui.cart.CartViewModel
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavController,
+
+    viewModel: HomeViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel= hiltViewModel()) {
     val productsState by viewModel.productsState.collectAsState()
+    Button(onClick = {navController.navigate("cart")}) {
+        Text("Go to Cart")
+    }
 
 
 
@@ -52,13 +63,29 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
             LazyColumn {
                 items(filteredProducts) { product ->
-                    Text("${product.name} - ₹${product.price}")
+                    Row{
+                        Text("${product.name} - ₹${product.price}")
+                        Button(onClick = {
+                            cartViewModel.addItem(
+                                CartItem(
+                                    name=product.name,
+                                    price=product.price,
+                                    imageUrl = product.imageUrl
+
+                                )
+
+                            )
+                        }){
+                            Text("Add to Cart")
+                        }
+                    }
                 }
             }
         }
         is ProductState.Error -> {
             Text((productsState as ProductState.Error).message)
         }
+
     }
 
 }
