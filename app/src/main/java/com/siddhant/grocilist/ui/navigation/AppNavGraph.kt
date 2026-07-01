@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.siddhant.grocilist.ui.auth.OtpInputScreen
 import com.siddhant.grocilist.ui.auth.PhoneInputScreen
+import com.siddhant.grocilist.ui.cart.CartScreen
 import com.siddhant.grocilist.ui.home.HomeScreen
 
 @Composable
@@ -26,7 +27,10 @@ fun AppNavGraph() {
             OtpInputScreen(verificationId = verificationId, navController = navController)
         }
         composable("home"){
-            HomeScreen()
+            HomeScreen(navController=navController)
+        }
+        composable("cart"){
+            CartScreen(navController=navController)
         }
 
     }
