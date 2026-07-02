@@ -1,5 +1,6 @@
 package com.siddhant.grocilist.ui.home
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,9 +28,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     cartViewModel: CartViewModel= hiltViewModel()) {
     val productsState by viewModel.productsState.collectAsState()
-    Button(onClick = {navController.navigate("cart")}) {
-        Text("Go to Cart")
-    }
+
 
 
 
@@ -47,36 +46,43 @@ fun HomeScreen(
             val filteredProducts = products
                 .filter{selectedCategory == null || it.category==selectedCategory}
                 .filter{it.name.contains(searchQuery, ignoreCase = true)}
-            TextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it }
-            )
-            Row {
-                Button(onClick = { selectedCategory = null }) { Text("All") }
-                Button(onClick = { selectedCategory = "Fruits" }) { Text("Fruits") }
-                Button(onClick = { selectedCategory = "Dairy" }) { Text("Dairy") }
-                Button(onClick = { selectedCategory = "Bakery" }) { Text("Bakery") }
-            }
+            Column{
+                Button(onClick = {
+                    navController.navigate("cart")
+                }) {
+                    Text("Go to Cart")
+                }
+                TextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it }
+                )
+                Row {
+                    Button(onClick = { selectedCategory = null }) { Text("All") }
+                    Button(onClick = { selectedCategory = "Fruits" }) { Text("Fruits") }
+                    Button(onClick = { selectedCategory = "Dairy" }) { Text("Dairy") }
+                    Button(onClick = { selectedCategory = "Bakery" }) { Text("Bakery") }
+                }
 
 
 
 
-            LazyColumn {
-                items(filteredProducts) { product ->
-                    Row{
-                        Text("${product.name} - ₹${product.price}")
-                        Button(onClick = {
-                            cartViewModel.addItem(
-                                CartItem(
-                                    name=product.name,
-                                    price=product.price,
-                                    imageUrl = product.imageUrl
+                LazyColumn {
+                    items(filteredProducts) { product ->
+                        Row {
+                            Text("${product.name} - ₹${product.price}")
+                            Button(onClick = {
+                                cartViewModel.addItem(
+                                    CartItem(
+                                        name = product.name,
+                                        price = product.price,
+                                        imageUrl = product.imageUrl
+
+                                    )
 
                                 )
-
-                            )
-                        }){
-                            Text("Add to Cart")
+                            }) {
+                                Text("Add to Cart")
+                            }
                         }
                     }
                 }

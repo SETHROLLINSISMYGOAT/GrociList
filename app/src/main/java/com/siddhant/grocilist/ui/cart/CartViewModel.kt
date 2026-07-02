@@ -29,6 +29,7 @@ class CartViewModel @Inject constructor(
 
     fun addItem(item: CartItem) {
         viewModelScope.launch { repository.addItem(item) }
+
     }
 
     fun removeItem(item: CartItem) {

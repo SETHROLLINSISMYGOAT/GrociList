@@ -1,5 +1,6 @@
 package com.siddhant.grocilist.data.repository
 
+import android.util.Log
 import com.siddhant.grocilist.data.local.CartDao
 import com.siddhant.grocilist.data.model.CartItem
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,7 @@ class CartRepository @Inject constructor(
     fun getCartItems(): Flow<List<CartItem>> = cartDao.getAllCartItems()
     suspend fun addItem(cartItem: CartItem){
         cartDao.insertCartItem(cartItem)
+        Log.d("CartRepository", "Item added to cart: $cartItem")
     }
     suspend fun deleteItem(cartItem: CartItem){
         cartDao.deleteCartItem(cartItem)
