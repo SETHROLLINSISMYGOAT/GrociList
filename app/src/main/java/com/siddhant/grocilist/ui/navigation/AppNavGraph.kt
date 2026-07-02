@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.siddhant.grocilist.ui.auth.OtpInputScreen
 import com.siddhant.grocilist.ui.auth.PhoneInputScreen
 import com.siddhant.grocilist.ui.cart.CartScreen
+import com.siddhant.grocilist.ui.checkout.CheckoutScreen
 import com.siddhant.grocilist.ui.home.HomeScreen
 
 @Composable
@@ -31,6 +32,9 @@ fun AppNavGraph() {
         }
         composable("cart"){
             CartScreen(navController=navController)
+        }
+        composable("checkout"){
+            CheckoutScreen(navController=navController)
         }
 
     }
