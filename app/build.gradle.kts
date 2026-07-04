@@ -18,6 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["MAPS_API_KEY"] = project.findProperty("MAPS_API_KEY") ?: ""
     }
 
     buildTypes {
@@ -71,4 +72,12 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
+    // Google Maps Compose
+    implementation("com.google.maps.android:maps-compose:4.3.3")
+
+// Firebase Realtime Database
+    implementation("com.google.firebase:firebase-database-ktx")
+
+// Location services
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }
