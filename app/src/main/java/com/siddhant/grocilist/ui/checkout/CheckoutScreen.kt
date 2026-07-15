@@ -49,7 +49,11 @@ fun CheckoutScreen(
         when (checkoutState) {
             is CheckoutState.Idle -> {}
             is CheckoutState.Loading -> { CircularProgressIndicator() }
-            is CheckoutState.Success -> {}
+            is CheckoutState.Success -> {
+                navController.navigate("tracking/test_order_123") {
+                    popUpTo("home") { inclusive = false }
+                }
+            }
             is CheckoutState.Error -> { Text((checkoutState as CheckoutState.Error).message) }
 
         }

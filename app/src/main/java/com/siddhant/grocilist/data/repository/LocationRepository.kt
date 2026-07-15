@@ -10,8 +10,9 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class LocationRepository @Inject constructor(
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+
 ) {
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     suspend fun updateLocation(orderId:String,lat:Double,lng:Double){
         val locationData = mapOf(
             "latitude" to lat,
