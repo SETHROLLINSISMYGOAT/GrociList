@@ -26,14 +26,7 @@ fun CheckoutScreen(
     val cartItems by cartViewModel.cartState.collectAsState()
     val checkoutState by checkoutViewModel.checkoutState.collectAsState()
     val total = cartItems.sumOf { it.price * it.quantity }
-    LaunchedEffect(checkoutState){
-        when(checkoutState){
-            is CheckoutState.Success->{
-                navController.navigate("home")
-            }
-            else->{}
-        }
-    }
+
     Column {
         Text("Order Summary")
         LazyColumn {
@@ -54,7 +47,9 @@ fun CheckoutScreen(
                     popUpTo("home") { inclusive = false }
                 }
             }
+
             is CheckoutState.Error -> { Text((checkoutState as CheckoutState.Error).message) }
+
 
         }
     }
