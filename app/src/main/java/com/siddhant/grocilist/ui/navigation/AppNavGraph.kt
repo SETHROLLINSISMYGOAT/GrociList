@@ -6,7 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.siddhant.grocilist.data.model.Wallet
 import com.siddhant.grocilist.ui.Location.OrderTrackingScreen
+import com.siddhant.grocilist.ui.Wallet.WalletScreen
 import com.siddhant.grocilist.ui.auth.OtpInputScreen
 import com.siddhant.grocilist.ui.auth.PhoneInputScreen
 import com.siddhant.grocilist.ui.cart.CartScreen
@@ -45,6 +47,12 @@ fun AppNavGraph() {
             val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
             OrderTrackingScreen(orderId = orderId,navController=navController)
         }
+        composable("wallet"){
+            WalletScreen()
+
+        }
+
+
 
     }
 }
