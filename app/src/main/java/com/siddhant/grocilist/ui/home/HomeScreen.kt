@@ -52,6 +52,11 @@ fun HomeScreen(
                 }) {
                     Text("Go to Cart")
                 }
+                Button(onClick = {
+                    navController.navigate("wallet")
+                }) {
+                    Text("Wallet")
+                }
                 TextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it }

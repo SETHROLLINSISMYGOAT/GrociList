@@ -18,19 +18,19 @@ class CheckoutViewModel @Inject constructor(
     private val checkoutRepository: CheckoutRepository
 
 ) : ViewModel() {
-    private val _checkoutState= MutableStateFlow<CheckoutState>(CheckoutState.Idle)
-    val checkoutState: StateFlow<CheckoutState> =_checkoutState
-    fun placeOrder(items: List<CartItem>, total: Int){
+    private val _checkoutState = MutableStateFlow<CheckoutState>(CheckoutState.Idle)
+    val checkoutState: StateFlow<CheckoutState> = _checkoutState
+    fun placeOrder(items: List<CartItem>, total: Int) {
         viewModelScope.launch {
 
-            _checkoutState.value= CheckoutState.Loading
+            _checkoutState.value = CheckoutState.Loading
 
-            try{
-                val orderPlaced= checkoutRepository.placeOrder(items,total)
-                _checkoutState.value= CheckoutState.Success
+            try {
+                val orderPlaced = checkoutRepository.placeOrder(items, total)
+                _checkoutState.value = CheckoutState.Success
 
-            }catch (e: Exception){
-                _checkoutState.value= CheckoutState.Error(e.message?:"Something went wrong")
+            } catch (e: Exception) {
+                _checkoutState.value = CheckoutState.Error(e.message ?: "Something went wrong")
             }
 
         }
